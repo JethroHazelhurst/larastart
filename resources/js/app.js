@@ -10,14 +10,33 @@ window.Vue = require('vue');
 import moment from 'moment'
 import { Form, HasError, AlertError } from 'vform'
 import VueRouter from 'vue-router'
+import VueProgressBar from 'vue-progressbar'
 
 window.Form = Form;
+
+/**
+ * sweet alerts
+ */
+import Swal from 'sweetalert2'
+window.Swal = Swal
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+window.Toast = Toast;
+
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
 Vue.use(VueRouter)
 
-import VueProgressBar from 'vue-progressbar'
 const options = {
   color: '#bffaf3',
   failedColor: '#874b4b',
