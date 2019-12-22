@@ -75,6 +75,8 @@ Vue.filter('myDate', function(created){
     return moment(created).format('MMM Do YYYY')
 });
 
+window.Fire = new Vue()
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
