@@ -2049,6 +2049,7 @@ __webpack_require__.r(__webpack_exports__);
       editmode: false,
       users: {},
       form: new Form({
+        id: '',
         name: '',
         email: '',
         password: '',
@@ -2059,7 +2060,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateUser: function updateUser() {},
+    updateUser: function updateUser() {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.put('api/user/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Swal.fire('Updated!', 'Information has been updated.', 'success');
+        Fire.$emit('AfterCreate');
+
+        _this.$Progress.finish();
+      })["catch"](function () {
+        _this.$Progress.fail();
+      });
+    },
     editModal: function editModal(user) {
       this.editmode = true;
       this.form.reset();
@@ -2072,7 +2086,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#addNew').modal('show');
     },
     deleteUser: function deleteUser(id) {
-      var _this = this;
+      var _this2 = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -2085,7 +2099,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           // send request to the server
-          _this.form["delete"]('api/user/' + id).then(function () {
+          _this2.form["delete"]('api/user/' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('AfterCreate');
           })["catch"](function () {
@@ -2095,15 +2109,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadUsers: function loadUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('api/user').then(function (_ref) {
         var data = _ref.data;
-        return _this2.users = data.data;
+        return _this3.users = data.data;
       });
     },
     createUser: function createUser() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$Progress.start();
       this.form.post('api/user').then(function () {
@@ -2114,16 +2128,16 @@ __webpack_require__.r(__webpack_exports__);
           title: 'User created successfully'
         });
 
-        _this3.$Progress.finish();
+        _this4.$Progress.finish();
       })["catch"](function () {});
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.loadUsers();
     Fire.$on('AfterCreate', function () {
-      _this4.loadUsers();
+      _this5.loadUsers();
     });
   }
 });

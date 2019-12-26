@@ -135,6 +135,7 @@
                 editmode: false,
                 users: {},
                 form: new Form({
+                    id: '',
                     name: '',
                     email: '',
                     password: '',
@@ -148,7 +149,21 @@
         methods: {
 
             updateUser() {
-
+                this.$Progress.start();
+                this.form.put('api/user/' + this.form.id)
+                    .then(() => {
+                        $('#addNew').modal('hide');
+                        Swal.fire(
+                          'Updated!',
+                          'Information has been updated.',
+                          'success'
+                        );
+                        Fire.$emit('AfterCreate')
+                        this.$Progress.finish();
+                    })
+                    .catch(() => {
+                        this.$Progress.fail();
+                    });
             },
 
             editModal(user){
@@ -184,7 +199,7 @@
                                 'Deleted!',
                                 'Your file has been deleted.',
                                 'success'
-                            );
+                              );
                               Fire.$emit('AfterCreate');
                             })
                             .catch(() => {
