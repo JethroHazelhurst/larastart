@@ -130,6 +130,10 @@
 
 <script>
     export default {
+
+        /**
+         *
+         */
         data() {
             return {
                 editmode: false,
@@ -146,6 +150,9 @@
             }
         },
 
+        /**
+         *
+         */
         methods: {
 
             updateUser() {
@@ -240,6 +247,9 @@
             }
         },
 
+        /**
+         *
+         */
         created() {
             this.loadUsers()
             Fire.$on('AfterCreate', () => {
