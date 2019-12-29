@@ -89,7 +89,7 @@
                                    </div>
                                </div>
                                <div class="form-group">
-                                   <label for="photo" class="col-sm-2 control-label">Profile Photo</label>
+                                   <label for="photo" class="col-sm-12 control-label">Profile Photo</label>
                                    <div class="col-sm-12">
                                        <input type="file" @change="updateProfile" name="photo" class="form-input">
                                    </div>
@@ -149,22 +149,31 @@
 
         methods: {
             updateInfo(){
+                this.$Progress.start();
                 this.form.put('api/profile')
                     .then(() => {
-
+                        this.$Progress.finish();
                     })
                     .catch(() => {
-
+                        this.$Progress.fail();
                     });
             },
 
             updateProfile(e){
                 let file = e.target.files[0];
                 let reader = new FileReader();
-                reader.onloadend = (file) => 
-                    this.form.photo = reader.result;
+                if (file['size'] < 2111775) {
+                    reader.onloadend = (file) => {
+                        this.form.photo = reader.result;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading a large file'
+                    });
                 }
-                reader.readAsDataURL(file);
             }
         },
 
