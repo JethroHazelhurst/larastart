@@ -88,6 +88,12 @@ class UserController extends Controller
 
         }
 
+        if (!empty($request->passport)) {
+            $request->merge([
+                'password' => Hash::make($request['password'])
+            ]);
+        }
+
         $user->update($request->all());
         return ['message' => "Success"];
     }
