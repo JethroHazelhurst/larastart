@@ -78162,7 +78162,7 @@ var options = {
     termination: 300
   },
   autoRevert: true,
-  location: 'left',
+  location: 'top',
   inverse: false
 };
 Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_3___default.a, options);
