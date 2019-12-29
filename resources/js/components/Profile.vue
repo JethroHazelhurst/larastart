@@ -11,7 +11,7 @@
                     </div>
 
                     <div class="widget-user-image">
-                        <img class="img-circle" src="/img/user_profile_image.jpg" alt="User Avatar">
+                        <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
                     </div>
 
                     <div class="card-footer">
@@ -148,6 +148,11 @@
         },
 
         methods: {
+
+            getProfilePhoto(){
+                return "img/profile/" + this.form.photo;
+            },
+
             updateInfo(){
                 this.$Progress.start();
                 this.form.put('api/profile')
