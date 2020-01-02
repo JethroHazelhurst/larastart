@@ -15,6 +15,12 @@ import VueProgressBar from 'vue-progressbar'
 window.Form = Form;
 
 /**
+ * authorization gates
+ */
+import Gate from './Gate.js';
+Vue.prototype.$gate = new Gate(window.user);
+
+/**
  * sweet alerts
  */
 import Swal from 'sweetalert2'
@@ -105,6 +111,11 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
+);
+
+Vue.component(
+    'not-found',
+    require('./components/404.vue').default
 );
 
 /**
